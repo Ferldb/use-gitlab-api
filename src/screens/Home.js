@@ -3,9 +3,8 @@ import { Text, Button, Card, Image } from "react-native-elements";
 import {
     StyleSheet,
     ActivityIndicator,
-    View,
     FlatList,
-    TouchableOpacity,
+    View,
 } from "react-native";
 import gitlab from "../api/gitlab";
 
@@ -28,55 +27,47 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <>
+        <Text style={styles.pageTitle}>Repositories: </Text>
             {projectsList ? (
                 <FlatList
                     data={projectsList}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => {
                         return (
-                            <TouchableOpacity
-                                style={styles.card}
-                                onPress={() =>
-                                    navigation.navigate("Details", {
-                                        id: item.id,
-                                    })
-                                }
-                            >
-                                <Card>
-                                    <Text h3 style={styles.Title}>{`Repo. name: ` + item.name}</Text>
-                                    <Text style={{fontSize:18}}>Contributors:</Text>
-                                    <View style={styles.containerItems}>
-                                        <Image
-                                            source={{
-                                                uri: "https://gitlab.com/" + item.namespace.avatar_url,
-                                            }}
-                                            style={{ width: 25, height: 25, marginRight: 5 }}
-                                            PlaceholderContent={<ActivityIndicator />}
-                                        />
-                                        <Text style={{fontSize:14}}>{item.namespace.full_path}</Text>
-                                    </View>
-                                </Card>
-                            </TouchableOpacity>
+                            <View style={styles.container}>
+                                <Text style={styles.Title}>{item.name}</Text>
+                            </View>
                         );
                     }}
                 />
             ) : (
-                <ActivityIndicator size="large" color="#0000ff" style={{ flex: 1 }} />
+                <ActivityIndicator size="large" color="#black" style={{ flex: 1 }} />
             )}
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'lightgrey',
+        borderColor: '#000000',
+        borderStyle: 'solid',
+        borderWidth: 2,
+        margin: 10,
+    },
     Title: {
         color: 'black',
         margin: 10,
-        textAlign: 'center',
-        fontWeight: "bold",
+        fontSize: 16,
     },
     containerItems: {
         flexDirection: "row",
     },
+    pageTitle: {
+        margin: 10,
+        fontSize: 20,
+        fontWeight: "bold",
+    }
 });
 
 export default HomeScreen;

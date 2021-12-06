@@ -9,7 +9,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignIn from './src/screens/Sign-in';
 import Logout from './src/screens/Logout';
 import Home from './src/screens/Home';
-import Details from './src/screens/Details';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -33,7 +32,6 @@ function App() {
             headerShown: false,
           }}
             name="Feed" component={Feed} />
-          <Stack.Screen name="Details" component={Details} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
