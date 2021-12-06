@@ -6,23 +6,16 @@ import {
     FlatList,
     View,
 } from "react-native";
-import gitlab from "../api/gitlab";
+import useGitLab from "../hooks/useGitLab";
 
 const HomeScreen = ({ navigation }) => {
+
     const [projectsList, setProjectsList] = useState();
+    const [results,searchProjects] = useGitLab();
 
     useEffect(() => {
-        
-        async function projects() {
-            const response = await gitlab.get("/projects", {
-                params: {
-                    owned: true,
-                    simple: true,
-                },
-            });
-            setProjectsList(response.data);
-        }
-        projects();
+        searchProjects();
+        setProjectsList(results);
     }, []);
 
     return (
@@ -41,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
                     }}
                 />
             ) : (
-                <ActivityIndicator size="large" color="#black" style={{ flex: 1 }} />
+                null
             )}
         </>
     );
